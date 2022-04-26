@@ -1,1 +1,40 @@
-<p>login works!</p>
+<div class="container">
+  <div class="card">
+    <form>
+      <div class="field" tabindex="1">
+        <label for="email">
+          <i class="fa fa-envelope"></i>Mail
+        </label>
+        <input id="email" type="email" placeholder="mail" formControlName="email" required>
+      </div>
+
+      <div class="field" tabindex="2">
+        <label for="password">
+          <i class="fa fa-lock"></i>Password
+        </label>
+        <input id="password" [type]="fieldTextType ? 'text' : 'password'" type="password"
+               placeholder="password" formControlName="password">
+        <div class="input-group-append">
+    <span class="input-group-text">
+      <i class="fa" [ngClass]="{
+          'fa-eye-slash': !fieldTextType,
+          'fa-eye': fieldTextType
+        }"
+        (click)="toggleFieldTextType()"
+      ></i>
+    </span>
+        </div>
+      </div>
+      <button class="btn">Login</button>
+    </form>
+
+  </div>
+</div>
+
+
+
+
+
+
+
+

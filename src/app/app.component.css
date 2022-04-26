@@ -6,7 +6,7 @@ body {
 }
 
 #mainNav {
-  background-color: #518335;
+  background-color: #1b75a8;
   font-family: 'Roboto', monospace;
   -webkit-transition: all 0.2s;
   transition: all 0.2s;
@@ -118,7 +118,7 @@ body {
 
   #mainNav .navbar-nav > li.nav-item > a.nav-link:hover,
   #mainNav .navbar-nav > li.nav-item > a.nav-link:focus:hover {
-    color: #60C6F2;
+    color: #020b0e;
 
   }
 
@@ -130,56 +130,20 @@ body {
 
   #mainNav.navbar-shrink .navbar-nav > li.nav-item > a.nav-link,
   #mainNav.navbar-shrink .navbar-nav > li.nav-item > a.nav-link:focus {
-    color: #518335;
+    color: #1b75a8;
   }
 
   #mainNav.navbar-shrink .navbar-nav > li.nav-item > a.nav-link:hover,
   #mainNav.navbar-shrink .navbar-nav > li.nav-item > a.nav-link:focus:hover {
-    color: #518335;
+    color: #1b75a8;
   }
 
-}
-
-/*button search*/
-
-.search {
-  width: 100%;
-  position: relative;
-  display: flex;
-
-}
-
-.searchTerm {
-  width: 100%;
-  border: 3px solid #60C6F2;
-  background-color: rgba(96, 198, 242, 0.7);
-  border-right: none;
-  padding: 5px;
-  height: 40px;
-  border-radius: 5px 0 0 5px;
-  outline: none;
-  color: #9DBFAF;
-}
-
-.searchTerm:focus {
-  color: #fff;
 }
 
 input[type=text]::placeholder {
   color: #fff;
 }
 
-.searchButton {
-  width: 40px;
-  height: 40px;
-  border: 1px solid #60C6F2;
-  background: #60C6F2;
-  text-align: center;
-  color: #fff;
-  border-radius: 0 5px 5px 0;
-  cursor: pointer;
-  font-size: 20px;
-}
 
 
 .container-fluid {

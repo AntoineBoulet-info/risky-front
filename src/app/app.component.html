@@ -2,31 +2,42 @@
   <button (click)="isCollapsed =! isCollapsed" class="navbar-toggler" data-toggle="collapse"
           data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"
           aria-label="Toggle navigation">
-    <span class="navbar-toggler"><img src="assets/logo.png" style="width:20%;"></span>
+    <span class="navbar-toggler"><img src="assets/logo.png" style="width:15%;"></span>
   </button>
 
   <div class="collapse navbar-collapse justify-content-center" id="navbarCollapse" [ngbCollapse]="!isCollapsed">
     <ul class="navbar-nav">
-      <li class="navbar-brand"><a routerLink="" href="#mainNav"> <img src="assets/logo-128.png"
-                                                                      style="width:50%;"></a></li>
-      <li class="nav-item"><a class="nav-link" href="#" routerLink="/game">
+      <li class="navbar-brand"><a routerLink="" routerLinkActive="active" href="#mainNav"> <img
+        src="assets/logo-128.png"
+        style="width:50%;"></a></li>
+      <li class="nav-item"><a class="nav-link" routerLink="/game" routerLinkActive="active">
         <div class="icon">
           <i class="fa fa-gamepad" aria-hidden="false"></i></div>
-        <div class="name" data-text="Jouer au jeu">Jouer au jeu</div>
+        <div class="name" data-text="Play game">Play game</div>
       </a></li>
-      <li class="nav-item" ><a class="nav-link" href="#" routerLink="/history">
+      <li class="nav-item"><a class="nav-link" routerLink="/history" routerLinkActive="active">
+        <div class="icon">
+          <i class="fa fa-history" aria-hidden="false"></i></div>
+        <div class="name" data-text="Game History">Game History</div>
+      </a></li>
+      <li *ngIf="authService.isLoggedOut$ | async" class="nav-item"><a class="nav-link" routerLinkActive="active" routerLink="/sign-up">
         <div class="icon">
           <i class="fa fa-user-plus" aria-hidden="false"></i></div>
-        <div class="name" data-text="Historique des parties">Historique des parties</div>
+        <div class="name" data-text="Sign up">Sign up</div>
       </a></li>
-      <li class="nav-item" ><a class="nav-link" target="_top" href="#"
-         routerLinkActive="active" routerLink="/login">
+      <li class="nav-item"><a class="nav-link"
+                              routerLinkActive="active" routerLink="/login">
         <div class="icon">
           <i class="fa fa-user" aria-hidden="false"></i></div>
-        <div class="name" data-text="Se connecter">Se connecter</div>
+        <div class="name" data-text="Login">Login</div>
       </a></li>
     </ul>
   </div>
 
 </nav>
+
+
+<div [@routeAnimation]="getAnimationData(routerOutlet)">
+  <router-outlet #routerOutlet="outlet"></router-outlet>
+</div>
 

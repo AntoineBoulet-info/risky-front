@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {LOCALE_ID, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -9,6 +9,14 @@ import {NgbModal, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { RiskyComponent } from './risky/risky.component';
 import { HomeComponent } from './home/home.component';
 import { HistoryComponent } from './history/history.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {MessageService} from 'primeng/api';
+import {AuthentificationService} from "./_services/authentification.service";
+import {BrowserAnimationsModule, NoopAnimationsModule} from "@angular/platform-browser/animations";
+import {UserService} from "./_services/user.service";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import { SignUpComponent } from './sign-up/sign-up.component';
+import {ConfirmPasswordDirective} from "./_helpers/confirm-password.directive";
 
 @NgModule({
   declarations: [
@@ -16,14 +24,25 @@ import { HistoryComponent } from './history/history.component';
     LoginComponent,
     RiskyComponent,
     HomeComponent,
-    HistoryComponent
+    HistoryComponent,
+    SignUpComponent,
+    ConfirmPasswordDirective
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+    NoopAnimationsModule,
     AppRoutingModule,
     NgbModule,
+    ReactiveFormsModule,
+    FormsModule,
+    HttpClientModule
+
+
   ],
-  providers: [],
+  providers: [MessageService, AuthentificationService,
+    {provide: LOCALE_ID, useValue: 'fr-FR'},
+  UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

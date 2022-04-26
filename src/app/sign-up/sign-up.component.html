@@ -1,0 +1,98 @@
+<section >
+  <div class="container">
+    <div class="card">
+      <form [formGroup]="formulaire" (ngSubmit)="onSubmit()">
+        <div class="field" tabindex="1">
+          <label>
+            <i class="fa fa-id-card"></i>Votre civilité
+          </label>
+          <div class="d-flex justify-content-between">
+            <input class="input-civil" id="civilite1" type="radio" value="M." formControlName="civilite" required>
+            <label for="civilite1">M.</label>
+            <input class="input-civil" id="civilite2" type="radio" value="Mme" formControlName="civilite" required>
+            <label for="civilite2">Mme</label>
+            <input class="input-civil" id="civilite3" type="radio" value="Autre" formControlName="civilite" required>
+            <label for="civilite3">Autre</label>
+          </div>
+        </div>
+
+        <div class="field" tabindex="2">
+          <label for="nom">
+            <i class="fa fa-id-badge"></i>Nom
+          </label>
+          <input id="nom" type="text"  placeholder="Nom" formControlName="nom">
+        </div>
+
+        <div class="field" tabindex="3">
+          <label for="prenom">
+            <i class="fa fa-id-badge"></i>Prénom
+          </label>
+          <input id="prenom" type="text"  placeholder="Prenom" formControlName="prenom">
+        </div>
+
+
+        <div class="field" tabindex="4">
+          <label for="email">
+            <i class="fa fa-envelope"></i>Email
+          </label>
+          <input id="email" type="email"  placeholder="email@lenord.fr" formControlName="email" required>
+        </div>
+        <div class="field" tabindex="5">
+          <label for="password">
+            <i class="fa fa-lock"></i>Mot de passe
+          </label>
+          <input id="password" [type]="fieldTextType ? 'text' : 'password'" type="password"
+                 placeholder="Mot de passe" formControlName="password">
+          </div>
+          <div class="input-group-append">
+    <span class="input-group-text">
+      <i
+        class="fa"
+        [ngClass]="{
+          'fa-eye-slash': !fieldTextType,
+          'fa-eye': fieldTextType
+        }"
+        (click)="toggleFieldTextType()"
+      ></i>
+    </span>
+          </div>
+        <div class="field" tabindex="5">
+          <label for="confirmPassword">
+            <i class="fa fa-lock"></i>Confirmation mot de passe
+          </label>
+          <input appConfirmPassword="password" id="confirmPassword" [type]="fieldTextType ? 'text' : 'password'"
+                 type="password"
+                 placeholder="Mot de passe" formControlName="confirmPassword">
+          <div *ngIf="confirmPassword.errors?.['notEqual']" style="color:crimson;font-size:0.8rem;">Vos mots de passes sont
+            différents
+          </div>
+          <div class="input-group-append">
+    <span class="input-group-text">
+      <i
+        class="fa"
+        [ngClass]="{
+          'fa-eye-slash': !fieldTextType,
+          'fa-eye': fieldTextType
+        }"
+        (click)="toggleFieldTextType()"
+      ></i>
+    </span>
+          </div>
+        </div>
+
+        <button [disabled]="!formulaire.valid" class="btn">Sign up</button>
+      </form>
+
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
