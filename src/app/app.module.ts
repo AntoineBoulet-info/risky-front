@@ -17,6 +17,7 @@ import {UserService} from "./_services/user.service";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { SignUpComponent } from './sign-up/sign-up.component';
 import {ConfirmPasswordDirective} from "./_helpers/confirm-password.directive";
+import { PlayGameComponent } from './play-game/play-game.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import {ConfirmPasswordDirective} from "./_helpers/confirm-password.directive";
     HomeComponent,
     HistoryComponent,
     SignUpComponent,
-    ConfirmPasswordDirective
+    ConfirmPasswordDirective,
+    PlayGameComponent
   ],
   imports: [
     BrowserModule,
