@@ -1,0 +1,30 @@
+<form id="contact-form" role="form" [formGroup]="formulaire" (ngSubmit)="onSubmit()">
+  <div class="col-md-6">
+    <div class="form-group">
+      <p-dropdown  [options]="actions" class="form-check" name="actions" optionLabel="name" optionValue="id"
+                   formControlName="actions" placeholder="Select an action"></p-dropdown>
+    </div>
+    <div class="form-row">
+      <div class="col">
+        <input id="currentPlace" type="text" placeholder="Coordonnées X" class="form-control"
+               formControlName="currentPlace">
+      </div>
+      <div class="col">
+        <input id="nextPlace" type="text" placeholder="Coordonées Y" class="form-control"
+               formControlName="nextPlace">
+      </div>
+      <div class="col">
+        <input id="nbUnits" type="text" placeholder="Nombre d'unités" class="form-control"
+               formControlName="nbUnits">
+      </div>
+    </div>
+
+  </div>
+
+
+</form>
+
+
+
+
+

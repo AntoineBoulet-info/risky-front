@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
 import {Action} from "../_models/actions";
+import {FormControl, FormGroup} from "@angular/forms";
 
 @Component({
-  selector: 'app-risky',
-  templateUrl: './risky.component.html',
-  styleUrls: ['./risky.component.css']
+  selector: 'app-joueur-vs-ia',
+  templateUrl: './joueur-vs-ia.component.html',
+  styleUrls: ['./joueur-vs-ia.component.css']
 })
-export class RiskyComponent implements OnInit {
+export class JoueurVsIaComponent implements OnInit {
 
   actions: Action[];
 
@@ -34,4 +34,5 @@ export class RiskyComponent implements OnInit {
   onSubmit() {
     //todo
   }
+
 }

@@ -18,6 +18,10 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { SignUpComponent } from './sign-up/sign-up.component';
 import {ConfirmPasswordDirective} from "./_helpers/confirm-password.directive";
 import { PlayGameComponent } from './play-game/play-game.component';
+import {DropdownModule} from "primeng/dropdown";
+import { IaVsIaComponent } from './ia-vs-ia/ia-vs-ia.component';
+import { JoueurVsIaComponent } from './joueur-vs-ia/joueur-vs-ia.component';
+
 
 @NgModule({
   declarations: [
@@ -28,20 +32,23 @@ import { PlayGameComponent } from './play-game/play-game.component';
     HistoryComponent,
     SignUpComponent,
     ConfirmPasswordDirective,
-    PlayGameComponent
+    PlayGameComponent,
+    IaVsIaComponent,
+    JoueurVsIaComponent
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    NoopAnimationsModule,
-    AppRoutingModule,
-    NgbModule,
-    ReactiveFormsModule,
-    FormsModule,
-    HttpClientModule
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        NoopAnimationsModule,
+        AppRoutingModule,
+        NgbModule,
+        ReactiveFormsModule,
+        FormsModule,
+        HttpClientModule,
+        DropdownModule
 
 
-  ],
+    ],
   providers: [MessageService, AuthentificationService,
     {provide: LOCALE_ID, useValue: 'fr-FR'},
   UserService],
