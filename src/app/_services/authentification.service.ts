@@ -17,8 +17,7 @@ export const ANONYMOUS_USER: User = {
   id: 0,
   email: '',
   nom: '',
-  prenom: '',
-  civilite: '',
+  prenom: ''
 };
 
 
