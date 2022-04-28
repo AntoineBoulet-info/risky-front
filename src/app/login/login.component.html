@@ -1,6 +1,6 @@
 <div class="container">
   <div class="card">
-    <form>
+    <form [formGroup]="formulaireUser" (ngSubmit)="onSubmit()">
       <div class="field" tabindex="1">
         <label for="email">
           <i class="fa fa-envelope"></i>Mail
@@ -25,7 +25,7 @@
     </span>
         </div>
       </div>
-      <button class="btn">Login</button>
+      <button type="submit" class="btn">Login</button>
     </form>
 
   </div>

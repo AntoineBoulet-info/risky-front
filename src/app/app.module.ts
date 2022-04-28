@@ -11,7 +11,6 @@ import { HomeComponent } from './home/home.component';
 import { HistoryComponent } from './history/history.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MessageService} from 'primeng/api';
-import {AuthentificationService} from "./_services/authentification.service";
 import {BrowserAnimationsModule, NoopAnimationsModule} from "@angular/platform-browser/animations";
 import {UserService} from "./_services/user.service";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
@@ -21,6 +20,7 @@ import { PlayGameComponent } from './play-game/play-game.component';
 import {DropdownModule} from "primeng/dropdown";
 import { IaVsIaComponent } from './ia-vs-ia/ia-vs-ia.component';
 import { JoueurVsIaComponent } from './joueur-vs-ia/joueur-vs-ia.component';
+import { ProfileComponent } from './profile/profile.component';
 
 
 @NgModule({
@@ -34,7 +34,8 @@ import { JoueurVsIaComponent } from './joueur-vs-ia/joueur-vs-ia.component';
     ConfirmPasswordDirective,
     PlayGameComponent,
     IaVsIaComponent,
-    JoueurVsIaComponent
+    JoueurVsIaComponent,
+    ProfileComponent
   ],
     imports: [
         BrowserModule,
@@ -49,7 +50,7 @@ import { JoueurVsIaComponent } from './joueur-vs-ia/joueur-vs-ia.component';
 
 
     ],
-  providers: [MessageService, AuthentificationService,
+  providers: [MessageService,
     {provide: LOCALE_ID, useValue: 'fr-FR'},
   UserService],
   bootstrap: [AppComponent]

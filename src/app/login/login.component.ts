@@ -1,10 +1,13 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, NgZone, OnInit} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {User} from '../_models/user';
+import {UserService} from "../_services/user.service";
 import {AuthentificationService} from "../_services/authentification.service";
+import { TokenStorageService } from '../_services/token-storage.service';
+
 
 
 @Component({
@@ -16,43 +19,50 @@ export class LoginComponent implements OnInit {
   /** Composant de connexion d'un utilisateur
    * Formulaire de connexion
    **/
-
-  form: any = {
+  formulaireUser: FormGroup;
+  user: any = {
     email: null,
     password: null
   };
 
-  userName = this.authService.userValue.nom;
-  userFirstName = this.authService.userValue.prenom;
-  user: User | undefined;
+
 
   loading = false;
   fieldTextType: boolean | undefined;
   returnUrl: string | undefined;
-  error = '';
+  isSuccessful = false;
+  isSignUpFailed = false;
+  errorMessage = '';
+  isLoggedIn = false;
+  isLoginFailed = false;
+  roles: string[] = [];
 
-  formulaire = new FormGroup({
-    email: new FormControl('', [Validators.required]),
-    password: new FormControl('', [Validators.required])
-  });
 
-
-  constructor(private authService: AuthentificationService, private router: Router,
-              private route: ActivatedRoute) {
-
+  constructor(private router: Router,
+              private route: ActivatedRoute, private userService: UserService,
+              private authService: AuthentificationService, private tokenStorage: TokenStorageService
+              ) {
+    this.formulaireUser = new FormGroup({
+      email: new FormControl('toto.titi@foo.fr', [Validators.required]),
+      password: new FormControl('testlog', [Validators.required])
+    });
   }
 
   ngOnInit(): void {
     // get return url from route parameters or default to '/'
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
+    if (this.tokenStorage.getToken()) {
+      this.isLoggedIn = true;
+      this.roles = this.tokenStorage.getUser().roles;
+    }
   }
 
   get email(): AbstractControl  {
-    return <AbstractControl>this.formulaire.get('email');
+    return <AbstractControl>this.formulaireUser.get('email');
   }
 
   get password(): AbstractControl {
-    return <AbstractControl>this.formulaire.get('password');
+    return <AbstractControl>this.formulaireUser.get('password');
   }
 
   toggleFieldTextType() {
@@ -60,26 +70,36 @@ export class LoginComponent implements OnInit {
   }
 
 
-  onSubmit(): void {
-    console.log('Submit login');
-    this.form = {...this.form, ...this.formulaire.value};
+  onSubmit(): any {
+    /*this.user = {...this.form, ...this.formulaireUser.value};
     this.loading = true;
     this.authService.login(this.form.email, this.form.password)
-      .pipe(first())
-      .subscribe(
-        () => {
-          this.router.navigate([this.returnUrl]);
-          console.log("Bienvenue : ", this.authService.userValue.prenom, this.authService.userValue.nom)
+      .subscribe(() => {
+        console.log('Data added successfully!')
+        this.router.navigate(['/home']).then(r => console.log(r));
+      }, (err) => {
+        console.log(err);
+      });*/
+    this.user = {...this.user, ...this.formulaireUser.value};
+    this.authService.login(this.user.email, this.user.password).subscribe(
+      data => {
+        this.tokenStorage.saveToken(data.accessToken);
+        this.tokenStorage.saveUser(data);
+        this.isLoginFailed = false;
+        this.isLoggedIn = true;
+        this.roles = this.tokenStorage.getUser().roles;
 
-        },
-        error => {
-          console.log('Erreur: ', error);
-          // this.error = error.error.data.values[0];
-          this.loading = false;
-          console.log(error);
+      },
+      err => {
+        this.errorMessage = err.error.message;
+        this.isLoginFailed = true;
+      }
+    );
 
-        }
-      );
+    window.location.reload();
+
+
   }
+
 
 }

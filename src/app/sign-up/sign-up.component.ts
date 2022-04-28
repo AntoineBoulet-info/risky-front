@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, NgZone, OnInit} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
-import {AuthentificationService} from '../_services/authentification.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MessageService} from 'primeng/api';
 import {first} from 'rxjs/operators';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {UserService} from "../_services/user.service";
+import {AuthentificationService} from "../_services/authentification.service";
 
 @Component({
   selector: 'app-sign-up',
@@ -13,61 +14,48 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 })
 export class SignUpComponent implements OnInit {
 
+  formulaireUser: FormGroup;
   user: any = {
-    civilite: null,
-    nom: null,
-    prenom: null,
+    username: null,
     email: null,
     password: null
   };
-  id = this.authService.userValue.id;
 
-
-  formulaire = new FormGroup(
-    {
-      nom: new FormControl('Toto', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]),
-      prenom: new FormControl('Titi', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]),
-      email: new FormControl('toto.titi@foo.fr', [Validators.required]),
-      password: new FormControl('testlog', [Validators.required]),
-      confirmPassword: new FormControl('testlog', [Validators.required]),
-    },
-  );
   returnUrl: string | undefined;
   error = '';
+
+  isSuccessful = false;
+  isSignUpFailed = false;
+  errorMessage = '';
 
   loading: boolean | undefined;
   fieldTextType: boolean | undefined;
 
-  constructor(private messageService: MessageService, private authService: AuthentificationService, private router: Router, private route: ActivatedRoute,
-              private modalService: NgbModal) {
+  constructor(private messageService: MessageService, private router: Router, private route: ActivatedRoute,
+              private modalService: NgbModal, private userService: UserService,
+              private authService: AuthentificationService) {
+    this.formulaireUser = new FormGroup(
+      {
+        username: new FormControl('titi', [Validators.required]),
+        email: new FormControl('toto.titi@foo.fr', [Validators.required]),
+        password: new FormControl('testlog', [Validators.required]),
+      },
+    );
   }
 
   ngOnInit(): void {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
-  get nom(): AbstractControl {
-    return <AbstractControl>this.formulaire.get('nom');
+  get username(): AbstractControl {
+    return <AbstractControl>this.formulaireUser.get('username');
   }
-
-  get prenom(): AbstractControl {
-    return <AbstractControl>this.formulaire.get('prenom');
-  }
-
-  get civilite(): AbstractControl {
-    return <AbstractControl>this.formulaire.get('civilite');
-  }
-
-  get email(): AbstractControl {
-    return <AbstractControl>this.formulaire.get('email');
+    get email(): AbstractControl {
+    return <AbstractControl>this.formulaireUser.get('email');
   }
 
   get password(): AbstractControl {
-    return <AbstractControl>this.formulaire.get('password');
-  }
-
-  get confirmPassword(): AbstractControl {
-    return <AbstractControl>this.formulaire.get('confirmPassword');
+    return <AbstractControl>this.formulaireUser.get('password');
   }
 
 
@@ -77,23 +65,27 @@ export class SignUpComponent implements OnInit {
 
 
   onSubmit(): void {
-    this.user = {...this.user, ...this.formulaire.value};
-    this.loading = true;
-    this.authService.createUser(this.user.civilite, this.user.nom, this.user.prenom, this.user.email, this.user.password)
-      .pipe(first())
-      .subscribe(
-        () => {
-          this.router.navigate([this.returnUrl]);
-        },
-        error => {
-          console.log('Erreur: ', error);
-          //console.log(this.user);
-          this.error = error.error.data.values[0];
-          this.loading = false;
-          this.messageService.add({severity: 'error', summary: 'Erreur', detail: 'Vous possèdez déjà un compte', key: 'main'});
-        });
-
-
+    /*this.user = {...this.user, ...this.formulaireUser.value};
+    this.authentificationService.createUser(this.user.email,this.user.password)
+      .subscribe(() => {
+        console.log('Data added successfully!')
+        this.router.navigate(['/home']).then(r => console.log(r));
+      }, (err) => {
+        console.log(err);
+      });*/
+    this.user = {...this.user, ...this.formulaireUser.value};
+    this.authService.register(this.user.username,this.user.email, this.user.password).subscribe(
+      data => {
+        console.log(data);
+        this.isSuccessful = true;
+        this.isSignUpFailed = false;
+      },
+      err => {
+        this.errorMessage = err.error.message;
+        this.isSignUpFailed = true;
+      }
+    );
+    window.location.reload();
   }
 
 }

@@ -8,6 +8,7 @@ import {CommonModule} from "@angular/common";
 import {SignUpComponent} from "./sign-up/sign-up.component";
 import {JoueurVsIaComponent} from "./joueur-vs-ia/joueur-vs-ia.component";
 import {IaVsIaComponent} from "./ia-vs-ia/ia-vs-ia.component";
+import {ProfileComponent} from "./profile/profile.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -18,6 +19,7 @@ const routes: Routes = [
   {path: 'joueur-vs-ia', component: JoueurVsIaComponent},
   {path: 'ia-vs-ia', component: IaVsIaComponent},
   {path: 'history', component: HistoryComponent},
+  {path: 'profile', component: ProfileComponent},
 
 
 

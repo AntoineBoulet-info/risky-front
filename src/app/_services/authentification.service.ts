@@ -5,7 +5,8 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {User} from '../_models/user';
 import {environment} from '../../environments/environment';
 import {catchError, map, shareReplay, tap} from 'rxjs/operators';
-import {MessageService} from "primeng/api";
+import * as moment from 'moment';
+import {MessageService} from 'primeng/api';
 
 
 
@@ -13,12 +14,6 @@ const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
 
-export const ANONYMOUS_USER: User = {
-  id: 0,
-  email: '',
-  nom: '',
-  prenom: ''
-};
 
 
 @Injectable({
@@ -30,12 +25,16 @@ export class AuthentificationService {
    * Méthodes connexion, jeton JSON, création d'un profil et mot de passe oublié
    **/
 
-
+  /*private refreshTokenTimeout : any;
   private userSubject: BehaviorSubject<User> = new BehaviorSubject<User>(ANONYMOUS_USER);
+  private currentUserSubject: BehaviorSubject<User>;
   public user$: Observable<User> = this.userSubject.asObservable();
+
 
   private readonly JWT_TOKEN = 'JWT_TOKEN';
   private readonly REFRESH_TOKEN = 'REFRESH_TOKEN';
+
+  private loggedInStatus = JSON.parse(localStorage.getItem('loggedIn') || 'false');
 
   isLoggedIn$: Observable<boolean> = this.user$.pipe(map(user => {
     console.log('isLoggedIn$ ? ', user.id, ' ', (!!user.id ? 'Oui' : 'Non'));
@@ -44,15 +43,37 @@ export class AuthentificationService {
   isLoggedOut$: Observable<boolean> = this.isLoggedIn$.pipe(map(isLoggedIn => !isLoggedIn));
 
   constructor(private router: Router, private http: HttpClient, private messageService: MessageService) {
-
+    // @ts-ignore
+    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(sessionStorage.getItem('currentUser')));
   }
 
   public get userValue(): User {
     return this.userSubject.value;
   }
+  public get currentUserValue(): User {
+    return this.currentUserSubject.value;
+  }
+
+  createUser(email: string, password: string): Observable<any> {
+    console.log('Create User');
+    return this.http.post<any>(`${environment.apiUrl}/sign-up`, {email, password}, httpOptions)
+      .pipe(
+        tap(rep => console.log(rep)),
+        map(rep => {
+          const user = {user: rep.data.value, jwtToken: rep.data.token};
+          console.log('User registered: ', user);
+          return user;
+        }),
+        shareReplay(),
+        catchError(err => {
+          this.userSubject.next(ANONYMOUS_USER);
+          return throwError('bug');
+          // return of('');
+        }));
+  }
 
   login(email: string, password: string): Observable<any> {
-    return this.http.post<any>(`${environment.apiUrl}/auth/login`, {email, password}, httpOptions)
+    return this.http.post<any>(`${environment.apiUrl}/login`, {email, password}, httpOptions)
       .pipe(
         tap(rep => console.log(rep)),
         map(rep => {
@@ -74,38 +95,46 @@ export class AuthentificationService {
 
   logout(): void {
     const oldUser = this.userValue;
-    this.http.post<any>(`${environment.apiUrl}/auth/logout`, {}, httpOptions).subscribe(
+    this.http.post<any>(`${environment.apiUrl}/logout`, {}, httpOptions).subscribe(
       () => this.messageService.add({
         severity: 'info',
         summary: 'Déconnexion',
-        detail: `A bientôt, ${oldUser.prenom} ${oldUser.nom}`,
         key: 'main'
       })
     );
+    localStorage.removeItem('token');
+    localStorage.removeItem('loggedIn');
     this.userSubject.next(ANONYMOUS_USER);
+
     this.router.navigate(['/home']);
+  }*/
+
+
+  constructor(private http: HttpClient) { }
+  login(username: string, password: string): Observable<any> {
+    return this.http.post(environment.apiUrl + '/login', {
+      username,
+      password
+    }, httpOptions);
+  }
+  register(username: string, email: string, password: string): Observable<any> {
+    return this.http.post(environment.apiUrl + '/sign-up', {
+      username,
+      email,
+      password
+    }, httpOptions);
+  }
+
+  refreshToken(token: string) {
+    return this.http.post(environment.apiUrl + '/refreshtoken', {
+      refreshToken: token
+    }, httpOptions);
   }
 
 
-  createUser(civilite: string, nom: string, prenom: string, email: string, password: string): Observable<any> {
 
-    console.log('Create User');
-    return this.http.post<any>(`${environment.apiUrl}/auth/register`, {civilite, nom, prenom, email, password}, httpOptions)
-      .pipe(
-        tap(rep => console.log(rep)),
-        map(rep => {
-          const user = {user: rep.data.value, jwtToken: rep.data.token};
-          console.log('User registered: ', user);
-          return user;
-        }),
-        shareReplay(),
-        catchError(err => {
-          alert('L\'adresse mail est déjà utilisé, votre compte ne peut pas être créer !' + err.number);
-          this.userSubject.next(ANONYMOUS_USER);
-          return throwError('bug');
-          // return of('');
-        }));
-  }
+
+
 
 
 }
