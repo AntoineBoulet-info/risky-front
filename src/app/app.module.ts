@@ -21,6 +21,11 @@ import {DropdownModule} from "primeng/dropdown";
 import { IaVsIaComponent } from './ia-vs-ia/ia-vs-ia.component';
 import { JoueurVsIaComponent } from './joueur-vs-ia/joueur-vs-ia.component';
 import { ProfileComponent } from './profile/profile.component';
+import {VirtualScrollerModule} from "primeng/virtualscroller";
+import {SplitButtonModule} from "primeng/splitbutton";
+import {MenubarModule} from "primeng/menubar";
+import {IaService} from "./_services/ia.service";
+import {TokenStorageService} from "./_services/token-storage.service";
 
 
 @NgModule({
@@ -37,22 +42,25 @@ import { ProfileComponent } from './profile/profile.component';
     JoueurVsIaComponent,
     ProfileComponent
   ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        NoopAnimationsModule,
-        AppRoutingModule,
-        NgbModule,
-        ReactiveFormsModule,
-        FormsModule,
-        HttpClientModule,
-        DropdownModule
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    NoopAnimationsModule,
+    AppRoutingModule,
+    NgbModule,
+    ReactiveFormsModule,
+    FormsModule,
+    HttpClientModule,
+    DropdownModule,
+    VirtualScrollerModule,
+    SplitButtonModule,
+    MenubarModule
 
 
-    ],
-  providers: [MessageService,
+  ],
+  providers: [MessageService, IaService, TokenStorageService,
     {provide: LOCALE_ID, useValue: 'fr-FR'},
-  UserService],
+  UserService ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

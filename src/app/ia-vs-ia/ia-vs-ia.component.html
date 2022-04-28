@@ -1,1 +1,15 @@
-<p>ia-vs-ia works!</p>
+<ng-template let-ia pTemplate="item" let-i="index">
+  <div class="product-list-detail">
+    <h5 class="p-mb-2">{{ia.player}}</h5>
+    <i class="pi pi-tag annonce-category-icon"></i>
+    <span class="product-category" style="margin:5px;">{{ia.result}}</span>
+  </div>
+</ng-template>
+
+
+<button >
+  <a href="http://localhost:8000/api/IA1" >IA1</a>
+</button>
+<button  >
+  <a href="http://localhost:8000/api/IA2" >IA2</a>
+</button>
