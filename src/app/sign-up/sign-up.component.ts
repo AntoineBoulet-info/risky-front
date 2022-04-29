@@ -50,7 +50,8 @@ export class SignUpComponent implements OnInit {
   get username(): AbstractControl {
     return <AbstractControl>this.formulaireUser.get('username');
   }
-    get email(): AbstractControl {
+
+  get email(): AbstractControl {
     return <AbstractControl>this.formulaireUser.get('email');
   }
 
@@ -65,16 +66,8 @@ export class SignUpComponent implements OnInit {
 
 
   onSubmit(): void {
-    /*this.user = {...this.user, ...this.formulaireUser.value};
-    this.authentificationService.createUser(this.user.email,this.user.password)
-      .subscribe(() => {
-        console.log('Data added successfully!')
-        this.router.navigate(['/home']).then(r => console.log(r));
-      }, (err) => {
-        console.log(err);
-      });*/
     this.user = {...this.user, ...this.formulaireUser.value};
-    this.authService.register(this.user.username,this.user.email, this.user.password).subscribe(
+    this.authService.register(this.user.username, this.user.email, this.user.password).subscribe(
       data => {
         console.log(data);
         this.isSuccessful = true;

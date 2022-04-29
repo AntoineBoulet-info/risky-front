@@ -6,8 +6,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {User} from '../_models/user';
 import {UserService} from "../_services/user.service";
 import {AuthentificationService} from "../_services/authentification.service";
-import { TokenStorageService } from '../_services/token-storage.service';
-
+import {TokenStorageService} from '../_services/token-storage.service';
 
 
 @Component({
@@ -25,13 +24,9 @@ export class LoginComponent implements OnInit {
     password: null
   };
 
-
-
   loading = false;
   fieldTextType: boolean | undefined;
   returnUrl: string | undefined;
-  isSuccessful = false;
-  isSignUpFailed = false;
   errorMessage = '';
   isLoggedIn = false;
   isLoginFailed = false;
@@ -41,7 +36,7 @@ export class LoginComponent implements OnInit {
   constructor(private router: Router,
               private route: ActivatedRoute, private userService: UserService,
               private authService: AuthentificationService, private tokenStorage: TokenStorageService
-              ) {
+  ) {
     this.formulaireUser = new FormGroup({
       email: new FormControl('toto.titi@foo.fr', [Validators.required]),
       password: new FormControl('testlog', [Validators.required])
@@ -57,7 +52,7 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  get email(): AbstractControl  {
+  get email(): AbstractControl {
     return <AbstractControl>this.formulaireUser.get('email');
   }
 
@@ -71,15 +66,6 @@ export class LoginComponent implements OnInit {
 
 
   onSubmit(): any {
-    /*this.user = {...this.form, ...this.formulaireUser.value};
-    this.loading = true;
-    this.authService.login(this.form.email, this.form.password)
-      .subscribe(() => {
-        console.log('Data added successfully!')
-        this.router.navigate(['/home']).then(r => console.log(r));
-      }, (err) => {
-        console.log(err);
-      });*/
     this.user = {...this.user, ...this.formulaireUser.value};
     this.authService.login(this.user.email, this.user.password).subscribe(
       data => {

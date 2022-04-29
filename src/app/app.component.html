@@ -26,22 +26,23 @@
         <div class="name" data-text="Sign up">Sign up</div>
       </a></li>
       <li *ngIf="!isLoggedIn" class="nav-item"><a class="nav-link"
-                              routerLinkActive="active" routerLink="/login">
+                                                  routerLinkActive="active" routerLink="/login">
         <div class="icon">
           <i class="fa fa-user" aria-hidden="false"></i></div>
         <div class="name" data-text="Login">Login</div>
       </a></li>
       <li *ngIf="isLoggedIn" class="nav-item"><a class="nav-link"
-                              routerLinkActive="active" routerLink="/profile">
+                                                 routerLinkActive="active" routerLink="/profile">
         <div class="icon">
           <i class="fa fa-user" aria-hidden="false"></i></div>
         <div class="name" data-text="Login">{{this.username}}</div>
       </a></li>
-      <li *ngIf="isLoggedIn" class="nav-item"><a  (click)="logout()" class="nav-link"
+      <li *ngIf="isLoggedIn" class="nav-item"><a (click)="logout()" class="nav-link"
                                                  routerLinkActive="active">
         <div class="icon">
           <i class="fa fa-address-book" aria-hidden="false"></i></div>
-        <div class="name" >{{this.username}}</div></a>
+        <div class="name">{{this.username}}</div>
+      </a>
 
     </ul>
   </div>

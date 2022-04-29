@@ -9,7 +9,7 @@ import {Subscription} from "rxjs";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit, OnDestroy{
+export class AppComponent implements OnInit, OnDestroy {
   title = 'risky-front';
   isCollapsed: boolean = false;
   isLoggedIn = false;
@@ -33,7 +33,6 @@ export class AppComponent implements OnInit, OnDestroy{
   }
 
 
-
   constructor(private route: ActivatedRoute, private tokenStorageService: TokenStorageService) {
   }
 
@@ -43,7 +42,7 @@ export class AppComponent implements OnInit, OnDestroy{
 
   logout(): void {
     this.tokenStorageService.signOut();
-    this.isLoggedIn=false;
+    this.isLoggedIn = false;
     window.location.reload();
   }
 
